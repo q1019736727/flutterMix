@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:english_words/english_words.dart';
 import 'homePage.dart';
-import 'flowView.dart';
+import 'pages/index_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,21 +13,24 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        splashColor: Color.fromRGBO(0, 0, 0, 0),//点击效果设置为透明色
       ),
       // home: MyHomePage(title: 'Flutter Demo Home Page'),
-      home: new Scaffold(
-          appBar: new AppBar(
-            title: new Text('欢迎来到Flutter'),
-          ),
-          body: new Center(
-            // child: new RandomWords(),
-            // child: new Custom(),
-            child: new PageDetail(),
-            // child: new flowView(),
-          )),
+      home: ShopMain(),
+      // home: new Scaffold(
+      //     appBar: new AppBar(
+      //       title: new Text('欢迎来到Flutter'),
+      //     ),
+      //     body: new Center(
+      //       // child: new RandomWords(),
+      //       // child: new Custom(),
+      //       child: new PageDetail(),
+      //       // child: new flowView(),
+      //     )),
     );
   }
 }
@@ -145,8 +149,9 @@ class RandomWordsState extends State<RandomWords> {
   }
 }
 
-/*
-  初始化项目时的
+
+
+
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -190,4 +195,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-*/
+
