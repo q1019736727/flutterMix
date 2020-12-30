@@ -3,7 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:english_words/english_words.dart';
 import 'homePage.dart';
 import 'pages/index_page.dart';
-
+import 'common/global.dart';
+import 'common/materialColor.dart';
 void main() {
   runApp(MyApp());
 }
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
+        primaryColor: MainColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         splashColor: Color.fromRGBO(0, 0, 0, 0),//点击效果设置为透明色
       ),
@@ -150,7 +151,26 @@ class RandomWordsState extends State<RandomWords> {
 }
 
 
-
+class MyApp1 extends StatelessWidget{
+  final List<String> items;
+  MyApp1({Key key, @required this.items}):super(key:key);
+  @override
+  Widget build(BuildContext context ){
+      return MaterialApp(
+        title:'ListView widget',
+        home:Scaffold(
+          body:new ListView.builder(
+            itemCount:items.length,
+            itemBuilder:(context,index){
+              return new ListTile(
+                title:new Text('${items[index]}'),
+              );
+            }
+          )
+        ),
+      );
+  }
+}
 
 
 class MyHomePage extends StatefulWidget {
