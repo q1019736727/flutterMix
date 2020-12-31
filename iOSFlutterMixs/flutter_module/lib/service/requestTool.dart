@@ -12,7 +12,7 @@ class RequestTool {
       case requestType.GET:
         try {
           response = await dio.get(url, queryParameters: params);
-          print(response.data);
+          // print(response.data);
           return response.data;
         } catch (e) {
           print(e);
@@ -21,7 +21,7 @@ class RequestTool {
       case requestType.POST:
         try {
           response = await dio.post(url, data: params);
-          print(response.data);
+          // print(response.data);
           return response.data;
         } catch (e) {
           print(e);
@@ -31,7 +31,17 @@ class RequestTool {
   }
 }
 
+//获取首页所有数据
+Future homeData() async{
+  return await Future.wait([getHomeBanner(),getHomeNav()]);
+}
+
 Future getHomeBanner() async {
   return RequestTool.instance
       .request(api_list[homebannerKey], requestType.GET, null);
 }
+
+Future getHomeNav() async{
+  return RequestTool.instance.request(api_list[homenavgationKey], requestType.GET, null);
+}
+

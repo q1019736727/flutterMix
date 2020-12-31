@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:english_words/english_words.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'homePage.dart';
 import 'pages/index_page.dart';
 import 'common/global.dart';
 import 'common/materialColor.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -12,26 +14,31 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: MainColor,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        splashColor: Color.fromRGBO(0, 0, 0, 0),//点击效果设置为透明色
+    //设置适配尺寸 (填入设计稿中设备的屏幕尺寸) 此处假如设计稿是按iPhone6的尺寸设计的(iPhone6 750*1334)
+    return ScreenUtilInit(
+      designSize: Size(375, 667),
+      allowFontScaling: false,
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primaryColor: MainColor,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          splashColor: Color.fromRGBO(0, 0, 0, 0), //点击效果设置为透明色
+        ),
+        // home: MyHomePage(title: 'Flutter Demo Home Page'),
+        home: ShopMain(),
+        // home: new Scaffold(
+        //     appBar: new AppBar(
+        //       title: new Text('欢迎来到Flutter'),
+        //     ),
+        //     body: new Center(
+        //       // child: new RandomWords(),
+        //       // child: new Custom(),
+        //       child: new PageDetail(),
+        //       // child: new flowView(),
+        //     )),
       ),
-      // home: MyHomePage(title: 'Flutter Demo Home Page'),
-      home: ShopMain(),
-      // home: new Scaffold(
-      //     appBar: new AppBar(
-      //       title: new Text('欢迎来到Flutter'),
-      //     ),
-      //     body: new Center(
-      //       // child: new RandomWords(),
-      //       // child: new Custom(),
-      //       child: new PageDetail(),
-      //       // child: new flowView(),
-      //     )),
     );
   }
 }
@@ -150,28 +157,24 @@ class RandomWordsState extends State<RandomWords> {
   }
 }
 
-
-class MyApp1 extends StatelessWidget{
+class MyApp1 extends StatelessWidget {
   final List<String> items;
-  MyApp1({Key key, @required this.items}):super(key:key);
+  MyApp1({Key key, @required this.items}) : super(key: key);
   @override
-  Widget build(BuildContext context ){
-      return MaterialApp(
-        title:'ListView widget',
-        home:Scaffold(
-          body:new ListView.builder(
-            itemCount:items.length,
-            itemBuilder:(context,index){
-              return new ListTile(
-                title:new Text('${items[index]}'),
-              );
-            }
-          )
-        ),
-      );
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'ListView widget',
+      home: Scaffold(
+          body: new ListView.builder(
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                return new ListTile(
+                  title: new Text('${items[index]}'),
+                );
+              })),
+    );
   }
 }
-
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -187,6 +190,7 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -215,4 +219,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-

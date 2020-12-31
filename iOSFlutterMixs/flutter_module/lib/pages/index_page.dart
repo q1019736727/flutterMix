@@ -21,33 +21,33 @@ class _indexPages extends State<ShopMain> {
     BottomNavigationBarItem(icon: Icon(CupertinoIcons.memories), label: '我的'),
   ];
   final pages = [HomePage(), CateGoryPage(), CartPage(), MemeberPage()];
-  int currentIndex = 0;
-  var currentPage;
+  int _currentIndex = 0;
+  var _currentPage;
   @override
   void initState() {
-    currentPage = pages[currentIndex];
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       backgroundColor: Color.fromRGBO(255, 255, 255, 1.0),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Global.instance.MainColor(),
         selectedFontSize: 12.0,
-        currentIndex: currentIndex,
+        currentIndex: _currentIndex,
         items: bottomBars,
         onTap: (index) {
           setState(() {
-            currentIndex = index;
-            currentPage = pages[currentIndex];
+            _currentIndex = index;
           });
         },
       ),
-      body: currentPage,
+      body: IndexedStack(
+        index: _currentIndex,
+        children: pages,
+      ),
     );
   }
 }
