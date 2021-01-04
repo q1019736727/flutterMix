@@ -5,7 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'homePage.dart';
 import 'pages/index_page.dart';
 import 'common/global.dart';
-import 'common/materialColor.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_module/common/global.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,6 +23,11 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,   
+        ],
+        supportedLocales: [ Locale('zh', 'CN')],
         theme: ThemeData(
           primaryColor: MainColor,
           visualDensity: VisualDensity.adaptivePlatformDensity,

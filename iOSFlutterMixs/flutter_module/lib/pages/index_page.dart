@@ -22,7 +22,6 @@ class _indexPages extends State<ShopMain> {
   ];
   final pages = [HomePage(), CateGoryPage(), CartPage(), MemeberPage()];
   int _currentIndex = 0;
-  var _currentPage;
   @override
   void initState() {
     super.initState();
@@ -31,7 +30,7 @@ class _indexPages extends State<ShopMain> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(255, 255, 255, 1.0),
+      backgroundColor: Colors.white,
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Global.instance.MainColor(),
