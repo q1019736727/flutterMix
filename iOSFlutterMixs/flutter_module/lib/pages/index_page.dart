@@ -5,6 +5,7 @@ import 'home_page.dart';
 import 'cart_page.dart';
 import 'member_page.dart';
 import '../common/global.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class ShopMain extends StatefulWidget {
   @override

@@ -33,7 +33,7 @@ class RequestTool {
 
 //获取首页所有数据
 Future homeData() async{
-  return await Future.wait([getHomeBanner(),getHomeNav(),getHotRecommand(),getHomeRecommad()]);
+  return await Future.wait([getHomeBanner(),getHomeNav(),getHotRecommand(),getHomeRecommad(),getTicketList(1)]);
 }
 
 Future getHomeBanner() async {
@@ -57,5 +57,5 @@ Future getHotRecommand() async{
 
 Future getTicketList(int page) async{
     return RequestTool.instance
-    .request(api_list[homeRecommandKey], requestType.GET, {'pageNum':page,'searchKey':'三亚','cityName':'三亚','column':'TICKET','pageSize':'8'});
+    .request(api_list[homeRecommandKey], requestType.GET, {'pageNum':page,'searchKey':'三亚','cityName':'三亚','column':'TICKET','pageSize':'20'});
 }

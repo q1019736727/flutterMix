@@ -45,16 +45,18 @@ class flooerModel {
 class homeListModel{
   int id;
   String cityName;
+  String name;
   String picture;
   String link;
   String level;
   double score;
   double distance;
   String rank;
-  homeListModel({this.id,this.cityName,this.picture,this.link,this.level,this.score,this.distance,this.rank});
+  homeListModel({this.id,this.cityName,this.name,this.picture,this.link,this.level,this.score,this.distance,this.rank});
   homeListModel.fromJson(Map<String,dynamic> json){
     this.id = json['id'];
     this.cityName = json['cityName'];
+    this.name = json['name'];
     this.link = json['link'];
     this.level = json['level'];
     this.score = json['score'];
