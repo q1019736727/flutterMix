@@ -34,7 +34,7 @@ class _indexPages extends State<ShopMain> {
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Global.instance.MainColor(),
+        selectedItemColor: Global.instance.mainColor(),
         selectedFontSize: 12.0,
         currentIndex: _currentIndex,
         items: bottomBars,

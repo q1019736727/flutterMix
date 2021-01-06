@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Global {
   static Global instance = Global();
-  Color MainColor() {
+  Color mainColor() {
     return Color.fromRGBO(100, 200, 200, 1.0);
   }
 }

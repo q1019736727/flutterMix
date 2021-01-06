@@ -1,6 +1,4 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_module/common/global.dart';
 import '../service/requestTool.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,6 +16,7 @@ class _HomePageState extends State<HomePage>
   //保持页面状态AutomaticKeepAliveClientMixin
   @override
   bool get wantKeepAlive => true;
+
 
   var _currentPage = 1;
   EasyRefreshController _controller;
@@ -70,6 +69,7 @@ class _HomePageState extends State<HomePage>
           appBar: AppBar(
             title: Text('首页'),
             elevation: 0,
+            brightness: Brightness.light,
           ),
           // body: FutureBuilder(
           //   future: homeData(),
@@ -96,7 +96,7 @@ class _HomePageState extends State<HomePage>
           //     }
           //   },
           // ),
-          body: EasyRefresh(
+          body:  EasyRefresh(
             controller: _controller,
             // firstRefresh: true,
             header: refreshHeader(),
@@ -232,7 +232,7 @@ class SwiperCustom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 150.h,
+      height: 200.h,
       child: Swiper(
         itemBuilder: (context, index) {
           return Image.network(

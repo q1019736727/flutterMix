@@ -42,7 +42,7 @@ class flooerModel {
   }
 }
 
-class homeListModel{
+class homeListModel {
   int id;
   String cityName;
   String name;
@@ -52,8 +52,17 @@ class homeListModel{
   double score;
   double distance;
   String rank;
-  homeListModel({this.id,this.cityName,this.name,this.picture,this.link,this.level,this.score,this.distance,this.rank});
-  homeListModel.fromJson(Map<String,dynamic> json){
+  homeListModel(
+      {this.id,
+      this.cityName,
+      this.name,
+      this.picture,
+      this.link,
+      this.level,
+      this.score,
+      this.distance,
+      this.rank});
+  homeListModel.fromJson(Map<String, dynamic> json) {
     this.id = json['id'];
     this.cityName = json['cityName'];
     this.name = json['name'];

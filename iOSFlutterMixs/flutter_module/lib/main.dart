@@ -2,15 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:english_words/english_words.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'homePage.dart';
+// import 'homePage.dart';
 import 'pages/index_page.dart';
 import 'common/global.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_module/common/global.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:provider/provider.dart';
+import 'providers/categoryProvider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => TestPro(),),
+        ChangeNotifierProvider(create: (_) => CategoryPro(),)
+      ],
+      child: MyApp()
+    )
+  );
 }
 
 class MyApp extends StatelessWidget {

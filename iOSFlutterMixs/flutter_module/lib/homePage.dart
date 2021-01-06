@@ -95,7 +95,9 @@ class TitleSrction extends StatelessWidget {
 
   Widget _startNum() {
     var star = new GestureDetector(
-        onTap: () => {print('轻点击')},
+        onTap: () {
+          
+        },
         child: new Row(
           children: [
             new Text('点赞', style: TextStyle(color: Colors.grey[600])),

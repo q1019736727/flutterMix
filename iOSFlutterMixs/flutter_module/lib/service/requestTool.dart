@@ -59,3 +59,8 @@ Future getTicketList(int page) async{
     return RequestTool.instance
     .request(api_list[homeRecommandKey], requestType.GET, {'pageNum':page,'searchKey':'三亚','cityName':'三亚','column':'TICKET','pageSize':'20'});
 }
+
+Future getCateGoryList() async {
+  return RequestTool.instance
+    .request(api_list[getCategoryKey], requestType.POST, null);
+}
