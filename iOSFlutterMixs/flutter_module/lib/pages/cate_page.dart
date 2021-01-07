@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_module/common/global.dart';
 import 'package:flutter_module/providers/categoryProvider.dart';
+import '../providers/cateGoodslistProvider.dart';
 import '../service/requestTool.dart';
 import '../models/categoryModels.dart';
+import '../models/cateGoodlistModel.dart';
 import 'dart:convert';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
+import '../config/refreshConfig.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class CateGoryPage extends StatefulWidget {
   @override
@@ -12,30 +18,47 @@ class CateGoryPage extends StatefulWidget {
 }
 
 class _CateGoryPageState extends State<CateGoryPage> {
-  List<CategorySubModel> _categorys = [];
+  EasyRefreshController _refreshController = EasyRefreshController();
+  FToast fToast;
   Widget _leftB = Container(
-    width: 115,
+    width: 100,
   );
   @override
   void initState() {
     super.initState();
     _fetchData();
+    fToast = FToast();
+    fToast.init(context);
   }
 
   _fetchData() async {
     getCateGoryList().then((value) {
       final data = json.decode(value);
       final model = CategoryListModel.fromJson(data);
-      setState(() {
-        _categorys = model.data;
-      });
-      _leftB = LeftNav(categorys: _categorys);
-      context.read<CategoryPro>().setCurCategory(_categorys[0]);
+      _leftB = LeftNav(categorys: model.data);
+      context.read<CategoryPro>().setCurCategory(model.data[0]);
+      _fetchSubData(model.data[0]);
+    });
+  }
+
+  _fetchSubData(CategorySubModel sub) async {
+    getCategoryGoods(sub.mallCategoryId, sub.bxMallSubDto[0].mallSubId, 1)
+        .then((value) {
+      final data = json.decode(value);
+      final model = CateGoodsListModel.fromJson(data);
+      if (model.data != null) {
+        Provider.of<CateGoodslistProvider>(context, listen: false)
+            .setGoodsList(model.data);
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    if (Provider.of<CategoryPro>(context).currentPage == 1) {
+      try {} catch (e) {}
+      ;
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text('分类'),
@@ -55,6 +78,7 @@ class _CateGoryPageState extends State<CateGoryPage> {
       child: Column(
         children: [
           _rightNav(),
+          _rightPageWrap(),
         ],
       ),
     );
@@ -63,7 +87,7 @@ class _CateGoryPageState extends State<CateGoryPage> {
   Widget _rightNav() {
     return Container(
       height: 50,
-      width: 375.w - 115,
+      width: 375.w - 100,
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border(
@@ -89,14 +113,117 @@ class _CateGoryPageState extends State<CateGoryPage> {
   }
 
   Widget _rightNavItem(BxMallSubDto model, int index) {
-    return Container(
-      padding: EdgeInsets.only(left: 15),
-      alignment: Alignment.center,
-      child: InkWell(
-        onTap: () {},
-        child: Text(
-          model.mallSubName,
-          style: TextStyle(fontSize: 16),
+    return Consumer<CategoryPro>(
+      builder: (ctx, consu, child) {
+        return Container(
+          padding: EdgeInsets.only(left: 15),
+          alignment: Alignment.center,
+          child: InkWell(
+            onTap: () {
+              if (consu.currentSubIndex == index) return;
+              consu.setCurrentSubIndex(index);
+              getCategoryGoods(model.mallCategoryId, model.mallSubId, 1)
+                  .then((value) {
+                final data = json.decode(value);
+                CateGoodsListModel model;
+                if (data['data'] != null) {
+                  model = CateGoodsListModel.fromJson(data);
+                }
+                Provider.of<CateGoodslistProvider>(context, listen: false)
+                    .setGoodsList((model == null) ? [] : model.data);
+              });
+            },
+            child: Text(
+              model.mallSubName,
+              style: TextStyle(
+                fontSize: 16,
+                color: (consu.currentSubIndex == index)
+                    ? MainColor
+                    : Colors.black87,
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _rightPageWrap() {
+    print('wrap重构');
+    var goodsList =
+        Provider.of<CateGoodslistProvider>(context, listen: true).goodsList;
+    print(goodsList.length);
+    if (goodsList.length == 0) {
+      return Expanded(
+        child: Container(
+          width: (375.w - 100),
+          child: Center(
+            child: Text('暂无数据'),
+          ),
+        ),
+      );
+    }
+    return Expanded(
+      child: Container(
+        width: (375.w - 100),
+        child: EasyRefresh.custom(
+          controller: _refreshController,
+          header: refreshHeader(),
+          footer: refreshFooter(),
+          slivers: [
+            SliverGrid(
+              delegate: SliverChildBuilderDelegate(
+                (ctx, index) {
+                  return _cateGoodsItem(goodsList[index], index);
+                },
+                childCount: goodsList.length,
+              ),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 5,
+                  mainAxisSpacing: 5,
+                  childAspectRatio: 0.64),
+            )
+          ],
+          onLoad: () {
+            final cateprovider =
+                Provider.of<CategoryPro>(context, listen: false);
+            final pageNum = cateprovider.currentPage;
+            final currentSubCate = cateprovider.curSubCategory;
+            return getCategoryGoods(currentSubCate.mallCategoryId,
+                    currentSubCate.mallSubId, pageNum + 1)
+                .then((value) {
+              print(value);
+              final data = json.decode(value);
+              CateGoodsListModel model;
+              if (data['data'] != null) {
+                model = CateGoodsListModel.fromJson(data);
+              } else {
+                _showToast(fToast);
+              }
+              Provider.of<CateGoodslistProvider>(context, listen: false)
+                  .addGoodsList((model == null) ? [] : model.data);
+              cateprovider.setCurPageindex(pageNum + 1);
+            });
+          },
+          onRefresh: () {
+            final cateprovider =
+                Provider.of<CategoryPro>(context, listen: false);
+            final currentSubCate = cateprovider.curSubCategory;
+            return getCategoryGoods(
+                    currentSubCate.mallCategoryId, currentSubCate.mallSubId, 1)
+                .then((value) {
+              print(value);
+              final data = json.decode(value);
+              CateGoodsListModel model;
+              if (data['data'] != null) {
+                model = CateGoodsListModel.fromJson(data);
+              }
+              Provider.of<CateGoodslistProvider>(context, listen: false)
+                  .setGoodsList((model == null) ? [] : model.data);
+              cateprovider.setCurPageindex(1);
+            });
+          },
         ),
       ),
     );
@@ -122,7 +249,7 @@ class _LeftNavState extends State<LeftNav> {
 
   Widget _leftNav() {
     return Container(
-      width: 115,
+      width: 100,
       decoration: BoxDecoration(
         border: Border(
           right: BorderSide(width: 0.5, color: Colors.black26),
@@ -140,10 +267,21 @@ class _LeftNavState extends State<LeftNav> {
   Widget _categoryItem(CategorySubModel model, int index) {
     return InkWell(
       onTap: () {
+        if (_currentCategoryIndex == index) return;
         setState(() {
           _currentCategoryIndex = index;
         });
-        context.read<CategoryPro>().setCurCategory(model);
+        context.read<CategoryPro>()
+          ..setCurCategory(model)
+          ..setCurSubCategory(model.bxMallSubDto[0], isReset: true)
+          ..setCurrentSubIndex(0);
+
+        getCategoryGoods(model.mallCategoryId, '', 1).then((value) {
+          final data = json.decode(value);
+          final model = CateGoodsListModel.fromJson(data);
+          Provider.of<CateGoodslistProvider>(context, listen: false)
+              .setGoodsList(model.data);
+        });
       },
       child: Container(
         height: 60,
@@ -156,9 +294,73 @@ class _LeftNavState extends State<LeftNav> {
         ),
         child: Text(
           model.mallCategoryName,
-          style: TextStyle(fontSize: 18),
+          style: TextStyle(fontSize: 16),
         ),
       ),
     );
   }
+}
+
+Widget _cateGoodsItem(CateGoods model, int index) {
+  final wh = ((375.w - 100) / 2) - 20;
+  return InkWell(
+    child: Container(
+      color: Colors.white,
+      padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+      child: Column(
+        children: [
+          Image.network(
+            model.image,
+            width: wh,
+            height: wh,
+          ),
+          SizedBox(height: 13),
+          Text(
+            '${model.goodsName}',
+            maxLines: 2,
+            style: TextStyle(fontSize: 15),
+          ),
+          SizedBox(height: 5),
+          Row(
+            children: [
+              Text(
+                '￥${model.presentPrice.toDouble().toString()}',
+                style: TextStyle(fontSize: 15),
+              ),
+              Text(
+                '￥${model.oriPrice.toDouble().toString()}',
+                style: TextStyle(
+                  fontSize: 13,
+                  color: Colors.black38,
+                  decoration: TextDecoration.lineThrough,
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    ),
+  );
+}
+
+_showToast(FToast toast) {
+  Widget toastWid = Container(
+    padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(25.0),
+      color: Colors.black87,
+    ),
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text("没有更多了",style: TextStyle(color: Colors.white),),
+      ],
+    ),
+  );
+
+  toast.showToast(
+    child: toastWid,
+    gravity: ToastGravity.CENTER,
+    toastDuration: Duration(seconds: 2),
+  );
 }

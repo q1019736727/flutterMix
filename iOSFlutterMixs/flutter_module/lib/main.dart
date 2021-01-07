@@ -9,13 +9,15 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_module/common/global.dart';
 import 'package:provider/provider.dart';
 import 'providers/categoryProvider.dart';
+import 'providers/cateGoodslistProvider.dart';
 
 void main() {
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => TestPro(),),
-        ChangeNotifierProvider(create: (_) => CategoryPro(),)
+        ChangeNotifierProvider(create: (_) => CategoryPro(),),
+        ChangeNotifierProvider(create: (_) => CateGoodslistProvider(),)
       ],
       child: MyApp()
     )

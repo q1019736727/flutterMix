@@ -35,6 +35,7 @@ dependencies:
   flutter_screenutil: ^4.0.2
   flutter_easyrefresh: ^2.1.8
   provider: ^4.3.2
+  fluttertoast: ^7.1.6
   
 dev_dependencies:
   flutter_test:
