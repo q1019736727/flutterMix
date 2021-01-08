@@ -1,3 +1,9 @@
+/*
+ * @Author: cy
+ * @Date: 2020-12-29 11:35:44
+ * @LastEditTime: 2021-01-08 13:39:41
+ * @FilePath: /flutter_module/lib/pages/cate_page.dart
+ */
 import 'package:flutter/material.dart';
 import 'package:flutter_module/common/global.dart';
 import 'package:flutter_module/providers/categoryProvider.dart';
@@ -11,6 +17,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import '../config/refreshConfig.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'detail/goods_detail.dart';
 
 class CateGoryPage extends StatefulWidget {
   @override
@@ -121,6 +128,7 @@ class _CateGoryPageState extends State<CateGoryPage> {
           child: InkWell(
             onTap: () {
               if (consu.currentSubIndex == index) return;
+              _refreshController.resetLoadState();
               consu.setCurrentSubIndex(index);
               getCategoryGoods(model.mallCategoryId, model.mallSubId, 1)
                   .then((value) {
@@ -152,7 +160,10 @@ class _CateGoryPageState extends State<CateGoryPage> {
     print('wrap重构');
     var goodsList =
         Provider.of<CateGoodslistProvider>(context, listen: true).goodsList;
-    print(goodsList.length);
+    final page = Provider.of<CategoryPro>(context, listen: true).currentPage;
+    if (page == 1) {
+      // _refreshController.callRefresh();
+    }
     if (goodsList.length == 0) {
       return Expanded(
         child: Container(
@@ -174,7 +185,7 @@ class _CateGoryPageState extends State<CateGoryPage> {
             SliverGrid(
               delegate: SliverChildBuilderDelegate(
                 (ctx, index) {
-                  return _cateGoodsItem(goodsList[index], index);
+                  return _cateGoodsItem(goodsList[index], index, context);
                 },
                 childCount: goodsList.length,
               ),
@@ -193,7 +204,6 @@ class _CateGoryPageState extends State<CateGoryPage> {
             return getCategoryGoods(currentSubCate.mallCategoryId,
                     currentSubCate.mallSubId, pageNum + 1)
                 .then((value) {
-              print(value);
               final data = json.decode(value);
               CateGoodsListModel model;
               if (data['data'] != null) {
@@ -201,6 +211,7 @@ class _CateGoryPageState extends State<CateGoryPage> {
               } else {
                 _showToast(fToast);
               }
+              _refreshController.finishLoad(noMore: (data['data'] == null));
               Provider.of<CateGoodslistProvider>(context, listen: false)
                   .addGoodsList((model == null) ? [] : model.data);
               cateprovider.setCurPageindex(pageNum + 1);
@@ -210,10 +221,10 @@ class _CateGoryPageState extends State<CateGoryPage> {
             final cateprovider =
                 Provider.of<CategoryPro>(context, listen: false);
             final currentSubCate = cateprovider.curSubCategory;
+            _refreshController.resetLoadState();
             return getCategoryGoods(
                     currentSubCate.mallCategoryId, currentSubCate.mallSubId, 1)
                 .then((value) {
-              print(value);
               final data = json.decode(value);
               CateGoodsListModel model;
               if (data['data'] != null) {
@@ -301,9 +312,22 @@ class _LeftNavState extends State<LeftNav> {
   }
 }
 
-Widget _cateGoodsItem(CateGoods model, int index) {
+Widget _cateGoodsItem(CateGoods model, int index, BuildContext ctx) {
+  _push() async {
+    final result =
+        await Navigator.push(ctx, new MaterialPageRoute(builder: (context) {
+      return GoodsDetail(
+        goods: model,
+      );
+    }));
+    print(result);
+  }
+
   final wh = ((375.w - 100) / 2) - 20;
   return InkWell(
+    onTap: () {
+      _push();
+    },
     child: Container(
       color: Colors.white,
       padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
@@ -353,7 +377,10 @@ _showToast(FToast toast) {
     child: Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text("没有更多了",style: TextStyle(color: Colors.white),),
+        Text(
+          "没有更多了",
+          style: TextStyle(color: Colors.white),
+        ),
       ],
     ),
   );

@@ -1,8 +1,15 @@
+/*
+ * @Author: cy
+ * @Date: 2020-12-29 15:11:03
+ * @LastEditTime: 2021-01-08 13:43:13
+ * @FilePath: /flutter_module/lib/service/requestTool.dart
+ */
 import 'package:dio/dio.dart';
 import 'dart:async';
 import '../config/api_list.dart';
 
 enum requestType { GET, POST }
+
 
 class RequestTool {
   static RequestTool instance = RequestTool();

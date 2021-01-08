@@ -1,3 +1,12 @@
+/*
+ * @Author: your name
+ * @Date: 2021-01-06 09:36:41
+ * @LastEditTime: 2021-01-08 13:27:45
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /flutter_module/lib/models/categoryModels.dart
+ */
+
 
 class CategoryListModel {
   CategoryListModel({

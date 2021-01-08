@@ -1,3 +1,10 @@
+/*
+ * @Author: cy
+ * @Date: 2020-12-29 11:35:24
+ * @LastEditTime: 2021-01-08 13:40:48
+ * @FilePath: /flutter_module/lib/pages/home_page.dart
+ */
+
 import 'package:flutter/material.dart';
 import '../service/requestTool.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -10,6 +17,7 @@ class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
+
 
 class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin {

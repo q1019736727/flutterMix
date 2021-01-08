@@ -1,3 +1,9 @@
+/*
+ * @Author: cy
+ * @Date: 2020-12-29 11:03:06
+ * @LastEditTime: 2021-01-08 13:40:41
+ * @FilePath: /flutter_module/lib/pages/index_page.dart
+ */
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_module/pages/cate_page.dart';

@@ -6,6 +6,7 @@ class CateGoodsListModel {
         this.data,
     });
 
+    
     String code;
     String message;
     List<CateGoods> data;

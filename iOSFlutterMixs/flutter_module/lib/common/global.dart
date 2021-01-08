@@ -9,3 +9,6 @@ class Global {
 
 const MainColor = Color.fromRGBO(100, 200, 200, 1.0);
 const White_color = Color.fromRGBO(0, 0, 0, 1);
+
+
+final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();

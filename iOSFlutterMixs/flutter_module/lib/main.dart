@@ -10,6 +10,7 @@ import 'package:flutter_module/common/global.dart';
 import 'package:provider/provider.dart';
 import 'providers/categoryProvider.dart';
 import 'providers/cateGoodslistProvider.dart';
+import 'package:fluro/fluro.dart';
 
 void main() {
   runApp(
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         supportedLocales: [ Locale('zh', 'CN')],
         theme: ThemeData(
           primaryColor: MainColor,
+          buttonColor: Colors.white,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           splashColor: Color.fromRGBO(0, 0, 0, 0), //点击效果设置为透明色
         ),

@@ -1,11 +1,20 @@
+/*
+ * @Author: Do not edit
+ * @Date: 2020-12-29 11:35:54
+ * @LastEditors: Do not edit
+ * @LastEditTime: 2021-01-08 13:35:44
+ * @FilePath: /flutter_module/lib/pages/cart_page.dart
+ */
 import 'package:flutter/material.dart';
 import 'package:flutter_module/providers/categoryProvider.dart';
 import 'package:provider/provider.dart';
+
 
 class CartPage extends StatefulWidget {
   @override
   _CartPageState createState() => _CartPageState();
 }
+
 
 class _CartPageState extends State<CartPage> {
   String countl = '66';
