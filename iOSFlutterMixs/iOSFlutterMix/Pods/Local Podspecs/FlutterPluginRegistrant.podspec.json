@@ -31,6 +31,18 @@
     ],
     "fluttertoast": [
 
+    ],
+    "shared_preferences": [
+
+    ],
+    "video_player": [
+
+    ],
+    "wakelock": [
+
+    ],
+    "webview_flutter": [
+
     ]
   }
 }

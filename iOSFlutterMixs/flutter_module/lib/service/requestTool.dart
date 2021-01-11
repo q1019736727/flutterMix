@@ -1,10 +1,11 @@
 /*
  * @Author: cy
  * @Date: 2020-12-29 15:11:03
- * @LastEditTime: 2021-01-08 13:43:13
+ * @LastEditTime: 2021-01-11 15:16:02
  * @FilePath: /flutter_module/lib/service/requestTool.dart
  */
 import 'package:dio/dio.dart';
+import '../config/request_header.dart';
 import 'dart:async';
 import '../config/api_list.dart';
 
@@ -28,6 +29,8 @@ class RequestTool {
         break;
       case requestType.POST:
         try {
+          // Options options = Options(headers: request_header);
+
           // dio.options.headers = {'Content-Type':'multipart/form-data'};
           dio.options.contentType = "application/x-www-form-urlencoded";
           response = await dio.post(url, data: params);
@@ -98,4 +101,10 @@ Future getCategoryGoods(
       api_list[getCategoryGoodsKey],
       requestType.POST,
       {'categoryId': categoryId, 'categorySubId': categorySubId, 'page': page,'pagesize':10});
+}
+
+
+/* 获取商品详情*/
+Future getGoodsDetail(String goodsid){
+  return RequestTool.instance.request(api_list[getGoodsDetailKey], requestType.POST, {'goodId':goodsid});
 }

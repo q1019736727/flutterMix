@@ -1,9 +1,10 @@
 /*
  * @Author: cy
  * @Date: 2020-12-29 11:35:44
- * @LastEditTime: 2021-01-08 13:39:41
+ * @LastEditTime: 2021-01-11 16:12:32
  * @FilePath: /flutter_module/lib/pages/cate_page.dart
  */
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_module/common/global.dart';
 import 'package:flutter_module/providers/categoryProvider.dart';
@@ -18,6 +19,9 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import '../config/refreshConfig.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'detail/goods_detail.dart';
+import '../routers/application.dart';
+import '../routers/routes.dart';
+import '../providers/goodsDetailProvider.dart';
 
 class CateGoryPage extends StatefulWidget {
   @override
@@ -314,13 +318,30 @@ class _LeftNavState extends State<LeftNav> {
 
 Widget _cateGoodsItem(CateGoods model, int index, BuildContext ctx) {
   _push() async {
-    final result =
-        await Navigator.push(ctx, new MaterialPageRoute(builder: (context) {
-      return GoodsDetail(
-        goods: model,
-      );
-    }));
-    print(result);
+
+        Provider.of<GoodsDetailProvider>(ctx, listen: false).clearDetailModel();
+
+    // final result =
+    //     await Navigator.push(ctx, new MaterialPageRoute(builder: (context) {
+    //   return GoodsDetail(
+    //     goods: model,
+    //   );
+    // }));
+    // print(result);
+
+    //路径不支持中文，要转换
+    Application.router
+        .navigateTo(ctx,
+            '${goodsDetailPath}?goodsId=${model.goodsId}&goodsPrice=${model.oriPrice}&goodsName=${fluroCnParamsEncode(model.goodsName)}',
+            transition: TransitionType.native)
+        .then((value) {
+          print('回传 ${value}');
+      },
+    );
+
+    // Routes.navigateTo(ctx, goodsDetailPath,params: {
+    //   'goodsModel':model
+    // });
   }
 
   final wh = ((375.w - 100) / 2) - 20;

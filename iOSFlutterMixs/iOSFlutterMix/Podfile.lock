@@ -5,16 +5,32 @@ PODS:
   - FlutterPluginRegistrant (0.0.1):
     - Flutter
     - fluttertoast
+    - shared_preferences
+    - video_player
+    - wakelock
+    - webview_flutter
   - fluttertoast (0.0.2):
     - Flutter
     - Toast
+  - shared_preferences (0.0.1):
+    - Flutter
   - Toast (4.0.0)
+  - video_player (0.0.1):
+    - Flutter
+  - wakelock (0.0.1):
+    - Flutter
+  - webview_flutter (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - Flutter (from `../flutter_module/.ios/Flutter/engine`)
   - flutter_module (from `../flutter_module/.ios/Flutter`)
   - FlutterPluginRegistrant (from `../flutter_module/.ios/Flutter/FlutterPluginRegistrant`)
   - fluttertoast (from `../flutter_module/.ios/Flutter/.symlinks/fluttertoast/ios`)
+  - shared_preferences (from `../flutter_module/.ios/Flutter/.symlinks/shared_preferences/ios`)
+  - video_player (from `../flutter_module/.ios/Flutter/.symlinks/video_player/ios`)
+  - wakelock (from `../flutter_module/.ios/Flutter/.symlinks/wakelock/ios`)
+  - webview_flutter (from `../flutter_module/.ios/Flutter/.symlinks/webview_flutter/ios`)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -29,13 +45,25 @@ EXTERNAL SOURCES:
     :path: "../flutter_module/.ios/Flutter/FlutterPluginRegistrant"
   fluttertoast:
     :path: "../flutter_module/.ios/Flutter/.symlinks/fluttertoast/ios"
+  shared_preferences:
+    :path: "../flutter_module/.ios/Flutter/.symlinks/shared_preferences/ios"
+  video_player:
+    :path: "../flutter_module/.ios/Flutter/.symlinks/video_player/ios"
+  wakelock:
+    :path: "../flutter_module/.ios/Flutter/.symlinks/wakelock/ios"
+  webview_flutter:
+    :path: "../flutter_module/.ios/Flutter/.symlinks/webview_flutter/ios"
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_module: d1e1ff44505640bd9aa37f23f63380c646272be4
-  FlutterPluginRegistrant: 3f0b8077e2055fddc6e6a895fbaba7c62d9ab1fd
+  FlutterPluginRegistrant: 8370daacfade65b8e417af66e8665a938c890111
   fluttertoast: 6122fa75143e992b1d3470f61000f591a798cc58
+  shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
+  video_player: 9cc823b1d9da7e8427ee591e8438bfbcde500e6e
+  wakelock: bfc7955c418d0db797614075aabbc58a39ab5107
+  webview_flutter: d2b4d6c66968ad042ad94cbb791f5b72b4678a96
 
 PODFILE CHECKSUM: eaa4aed3c94467058fa6c2ff70c977ba1aa5953b
 

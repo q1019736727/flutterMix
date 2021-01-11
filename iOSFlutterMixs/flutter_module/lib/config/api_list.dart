@@ -9,6 +9,7 @@ const homeHotKey = 'homeHot';
 
 const getCategoryKey = 'getCategoryKey';
 const getCategoryGoodsKey = 'getCategoryGoodsKey';
+const getGoodsDetailKey = 'getGoodsDetailKey';
 
 const api_list = {
   homebannerKey: service_host + '/api/info/app/recommend/page',
@@ -18,4 +19,5 @@ const api_list = {
   
   getCategoryKey: bx_servicehost + '/baixing/wxmini/getCategory',
   getCategoryGoodsKey: bx_servicehost + '/baixing/wxmini/getMallGoods',
+  getGoodsDetailKey: bx_servicehost + '/baixing/wxmini/getGoodDetailById',
 };

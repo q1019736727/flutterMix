@@ -179,12 +179,20 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Toast/Toast.framework"
   install_framework "${PODS_ROOT}/../../flutter_module/.ios/Flutter/App.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/fluttertoast/fluttertoast.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/shared_preferences/shared_preferences.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/video_player/video_player.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/wakelock/wakelock.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/webview_flutter/webview_flutter.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${PODS_ROOT}/../../flutter_module/.ios/Flutter/engine/Flutter.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Toast/Toast.framework"
   install_framework "${PODS_ROOT}/../../flutter_module/.ios/Flutter/App.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/fluttertoast/fluttertoast.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/shared_preferences/shared_preferences.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/video_player/video_player.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/wakelock/wakelock.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/webview_flutter/webview_flutter.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait

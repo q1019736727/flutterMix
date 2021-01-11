@@ -11,6 +11,9 @@ import 'package:provider/provider.dart';
 import 'providers/categoryProvider.dart';
 import 'providers/cateGoodslistProvider.dart';
 import 'package:fluro/fluro.dart';
+import 'routers/application.dart';
+import 'routers/routes.dart';
+import 'providers/goodsDetailProvider.dart';
 
 void main() {
   runApp(
@@ -18,7 +21,8 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => TestPro(),),
         ChangeNotifierProvider(create: (_) => CategoryPro(),),
-        ChangeNotifierProvider(create: (_) => CateGoodslistProvider(),)
+        ChangeNotifierProvider(create: (_) => CateGoodslistProvider(),),
+        ChangeNotifierProvider(create: (_) => GoodsDetailProvider(),)
       ],
       child: MyApp()
     )
@@ -28,6 +32,9 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final router = FluroRouter();
+    Routes.configureRoutes(router);
+    Application.router = router;
     //设置适配尺寸 (填入设计稿中设备的屏幕尺寸) 此处假如设计稿是按iPhone6的尺寸设计的(iPhone6 750*1334)
     return ScreenUtilInit(
       designSize: Size(375, 667),
@@ -35,6 +42,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
+        onGenerateRoute: Application.router.generator,
         localizationsDelegates: [
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,   
